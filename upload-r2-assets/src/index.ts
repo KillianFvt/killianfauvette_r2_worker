@@ -14,8 +14,9 @@ export default {
 		}
 
 		if (request.method === 'PUT' || request.method === 'POST') {
-
+			// For example, the request URL my-worker.account.workers.dev/image.png
 			const url: URL = new URL(request.url);
+			// the key is "image.png"
 			const key: string = url.pathname.slice(1);
 			await env.KF_R2_BUCKET.put(key, request.body);
 			return new Response(`Object ${key} uploaded successfully!`);
@@ -24,6 +25,7 @@ export default {
 		if (request.method === 'GET') {
 			// For example, the request URL my-worker.account.workers.dev/image.png
 			const url: URL = new URL(request.url);
+			// the key is "image.png"
 			const key: string = url.pathname.slice(1);
 			// Retrieve the key "image.png"
 			const object: R2ObjectBody | null = await env.KF_R2_BUCKET.get(key);
