@@ -6,8 +6,8 @@ interface Env {
 export default {
 	async fetch(request, env: Env): Promise<Response> {
 
-		const auth = request.headers.get('Authorization');
-		const expectedAuth = `Bearer ${env.AUTH_SECRET}`;
+		const auth: string | null = request.headers.get('Authorization');
+		const expectedAuth: string = `Bearer ${env.AUTH_SECRET}`;
 
 		if (!auth || auth !== expectedAuth) {
 			return new Response('Unauthorized', { status: 401 });
@@ -31,7 +31,7 @@ export default {
 			const object: R2ObjectBody | null = await env.KF_R2_BUCKET.get(key);
 
 			if (object === null) {
-				return new Response('Object Not Found', { status: 404 });
+				return new Response(`Can\'t find ${key}`, { status: 404 });
 			}
 
 			const headers = new Headers();
