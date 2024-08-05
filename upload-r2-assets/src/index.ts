@@ -1,16 +1,17 @@
 interface Env {
 	KF_R2_BUCKET: R2Bucket;
 	AUTH_SECRET: string;
-}
-
-const corsHeaders = {
-	'Access-Control-Allow-Headers': '*',
-	'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-	'Access-Control-Allow-Origin': '*',
+	ACAO: string;
 }
 
 export default {
 	async fetch(request, env: Env): Promise<Response> {
+
+		const corsHeaders = {
+			'Access-Control-Allow-Headers': '*',
+			'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+			'Access-Control-Allow-Origin': env.ACAO,
+		}
 
 		if (request.method === 'OPTIONS') {
 			return new Response(null, {
