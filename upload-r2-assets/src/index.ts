@@ -57,7 +57,11 @@ export default {
 			headers.set('etag', object.httpEtag);
 
 			return new Response(object.body, {
-				headers: { ...headers, ...corsHeaders },
+				headers: {
+					...headers,
+					...corsHeaders,
+					'Content-Type': headers.get('content-type') || 'file',
+				},
 			});
 		}
 
