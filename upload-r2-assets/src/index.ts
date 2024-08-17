@@ -34,13 +34,10 @@ export default {
 			const url: URL = new URL(request.url);
 			let key: string = url.pathname.slice(1);
 
-			const existingObject: R2ObjectBody | null = await env.KF_R2_BUCKET.get(key);
-			if (existingObject !== null) {
-				const file_name = key.split('.')[0];
-				const file_extension = key.split('.')[1];
-				const now = new Date().toISOString().replace(/:/g, '-');
-				key = `${file_name}-${now}.${file_extension}`;
-			}
+			const file_name = key.split('.')[0];
+			const file_extension = key.split('.')[1];
+			const now = new Date().toISOString().replace(/:/g, '-');
+			key = `${file_name}-${now}.${file_extension}`;
 
 			await env.KF_R2_BUCKET.put(key, request.body);
 			return new Response(
